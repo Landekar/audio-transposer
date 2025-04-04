@@ -1,0 +1,327 @@
+:root {
+    --primary-color: #000000;
+    --secondary-color: #333333;
+    --accent-color: #666666;
+    --light-color: #ffffff;
+    --dark-color: #000000;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+.app-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container {
+    border: 2px dashed var(--secondary-color);
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-container:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(74, 109, 167, 0.05);
+}
+
+.upload-container p {
+    margin: 0.5rem 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.controls {
+    margin-top: 2rem;
+}
+
+.control-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    flex-grow: 1;
+    height: 8px;
+    -webkit-appearance: none;
+    background: var(--secondary-color);
+    outline: none;
+    border-radius: 4px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.slider::-moz-range-thumb:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.slider-value {
+    min-width: 60px;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--accent-color);
+}
+
+button:disabled {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+}
+
+.transpose-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.control-btn {
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playback-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.waveform-container {
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: auto;
+}
+
+/* Add Time Stretching Styles */
+.mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.mode-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: var(--secondary-color);
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.mode-btn.active {
+    background-color: var(--primary-color);
+    opacity: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#time-stretch-container {
+    margin-top: 0.5rem;
+    transition: opacity 0.3s ease;
+}
+
+#time-stretch-container.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Improved Timeline Styles */
+.timeline-group {
+    margin: 0.5rem 0 1.5rem;
+}
+
+.timeline-container {
+    position: relative;
+    width: 100%;
+}
+
+#timeline-slider {
+    width: 100%;
+    height: 12px;
+    margin: 0;
+    cursor: pointer;
+}
+
+#timeline-slider::-webkit-slider-thumb {
+    width: 14px;
+    height: 14px;
+}
+
+#timeline-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+}
+
+.time-display {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.9em;
+    color: #555;
+    padding-top: 5px;
+}
+
+/* Update position marker for waveform */
+.playhead-marker {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: var(--primary-color);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.youtube-input-container {
+    display: flex;
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+.youtube-input-container input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+}
+
+.youtube-input-container button {
+    border-radius: 0 4px 4px 0;
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 1rem;
+    }
+
+    .app-container {
+        padding: 1rem;
+    }
+
+    .playback-controls {
+        flex-direction: column;
+    }
+
+    .youtube-input-container {
+        flex-direction: column;
+    }
+
+    .youtube-input-container input,
+    .youtube-input-container button {
+        width: 100%;
+        border-radius: 4px;
+        margin: 0.25rem 0;
+    }
+}
+
+.upload-container.change-mode {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 1rem;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.upload-container.drag-over {
+    border-color: var(--primary-color);
+    background-color: rgba(74, 109, 167, 0.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
