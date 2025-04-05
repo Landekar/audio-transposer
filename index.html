@@ -5,94 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Transposer</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Audio Transposer</h1>
-        <p>Change the pitch of your audio without affecting speed</p>
-    </header>
-
-    <main>
-        <div class="app-container">
-            <div id="upload-container" class="upload-container">
-                <h2>Drop your audio file here</h2>
-                <p>or</p>
-                <button id="select-file-btn">Select File</button>
-                <input type="file" id="file-input" class="hidden" accept="audio/*">
-                <p class="upload-info">Supports MP3, WAV, OGG, etc.</p>
+        
+        <!-- Upload Section -->
+        <div id="upload-section" class="upload-section">
+            <p>Drag and drop an audio file here or</p>
+            <input type="file" id="audio-file" accept="audio/*" style="display: none;">
+            <button id="upload-btn">Select File</button>
+            <p>Supported formats: MP3, WAV, OGG, FLAC</p>
+        </div>
+        
+        <!-- Audio Controls (initially hidden) -->
+        <div id="audio-controls" class="audio-controls">
+            <!-- File Info and Change File Button -->
+            <div class="file-info">
+                <div id="file-name" class="file-name">No file selected</div>
+                <button id="change-file-btn" class="change-file-btn">Change File</button>
             </div>
-
-            <div id="youtube-container" class="upload-container">
-                <h2>Enter YouTube URL</h2>
-                <div class="youtube-input-container">
-                    <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=...">
-                    <button id="load-youtube-btn">Load</button>
-                </div>
-                <p class="upload-info">Enter a valid YouTube video URL</p>
+            
+            <!-- Waveform Visualization -->
+            <div class="visualization-container">
+                <canvas id="waveform"></canvas>
             </div>
-
-            <div id="audio-container" class="hidden">
-                <h3 id="file-name">File Name</h3>
-                <div id="waveform" class="waveform-container"></div>
-
-                <!-- Move Timeline/Progress Bar under waveform -->
-                <div class="control-group timeline-group">
-                    <div class="timeline-container">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="timeline-slider">
-                        <div class="time-display">
-                            <span id="time-current">0:00</span> / <span id="time-duration">0:00</span>
-                        </div>
-                    </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            
+            <!-- Time Display -->
+            <div class="time-display">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+            
+            <!-- Playback Controls -->
+            <div class="playback-controls">
+                <button id="play-pause-btn">Play</button>
+            </div>
+            
+            <!-- Control Sliders -->
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="transpose-slider">Pitch (Semitones): <span id="transpose-value">0</span></label>
+                    <input type="range" id="transpose-slider" min="-12" max="12" value="0" step="1">
                 </div>
-                <!-- End Timeline -->
-
-                <div class="controls">
-                    <div class="control-group">
-                        <label>Transpose (semitones): <span id="transpose-value">0</span></label>
-                        <div class="transpose-controls">
-                            <button id="transpose-down" class="control-btn">◀</button>
-                            <button id="transpose-up" class="control-btn">▶</button>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="volume-slider">Volume:</label>
-                        <div class="slider-container">
-                            <input type="range" min="0" max="100" value="100" class="slider" id="volume-slider">
-                            <div class="slider-value" id="volume-value">100%</div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Time Stretching:</label>
-                        <div class="mode-toggle">
-                            <button id="pitch-only-mode" class="mode-btn active">Pitch Only</button>
-                            <button id="time-stretch-mode" class="mode-btn">Time Stretch</button>
-                        </div>
-                        <div class="slider-container" id="time-stretch-container">
-                            <input type="range" min="50" max="150" value="100" class="slider" id="time-stretch-slider">
-                            <div class="slider-value" id="time-stretch-value">100%</div>
-                        </div>
-                    </div>
-
-                    <div class="playback-controls">
-                        <button id="play-pause-btn" class="control-btn">Play</button>
-                        <!-- <button id="stop-btn" class="control-btn">Stop</button> -->
-                        <button id="reset-btn" class="control-btn">Reset</button>
-                        <button id="change-file-btn" class="control-btn">Change File</button>
-                    </div>
+                
+                <div class="control-group">
+                    <label for="rate-slider">Speed (%): <span id="rate-value">100</span></label>
+                    <input type="range" id="rate-slider" min="50" max="200" value="100" step="5">
                 </div>
+            </div>
+            
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="volume-slider">Volume: <span id="volume-value">100</span>%</label>
+                    <input type="range" id="volume-slider" min="0" max="100" value="100">
+                </div>
+            </div>
+            
+            <!-- Time Stretch Checkbox -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="time-stretch-checkbox">
+                <label for="time-stretch-checkbox">Time Stretch Mode (Change pitch without affecting speed)</label>
             </div>
         </div>
-    </main>
-
-    <footer>
-        <p>Created for music & design exploration &copy; 2025</p>
-    </footer>
-
-    <!-- The inline script from audio-transposer.html is removed -->
-    <!-- We will load our logic via the module script -->
+        
+        <!-- Status Message -->
+        <div id="status" class="status"></div>
+    </div>
+    
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
